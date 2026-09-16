@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esther Chang</title>
+<meta name="description" content="Esther Chang — third-year Systems Design Engineering at the University of Waterloo. Hardware, medical devices, signal processing and reliability engineering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F5F5F7;
+    --surface:   #FFFFFF;
+    --surface-2: #FAFAFC;
+    --text:      #1D1D1F;
+    --text-2:    #6E6E73;
+    --line:      #D8D8DE;
+    --accent:    #0071E3;
+    --accent-sf: #E8F1FD;
+    --shadow:    0 2px 10px rgba(0,0,0,.05), 0 12px 28px rgba(0,0,0,.05);
+    --shadow-up: 0 4px 14px rgba(0,0,0,.07), 0 22px 48px rgba(0,0,0,.09);
+    --nav-bg:    rgba(245,245,247,.72);
+    --r-sm: 12px;
+    --r:    20px;
+    --r-lg: 28px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #000000;
+      --surface:   #1C1C1E;
+      --surface-2: #232326;
+      --text:      #F5F5F7;
+      --text-2:    #98989D;
+      --line:      #2E2E32;
+      --accent:    #0A84FF;
+      --accent-sf: #11243C;
+      --shadow:    0 2px 10px rgba(0,0,0,.5);
+      --shadow-up: 0 18px 44px rgba(0,0,0,.6);
+      --nav-bg:    rgba(0,0,0,.66);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#000000; --surface:#1C1C1E; --surface-2:#232326; --text:#F5F5F7;
+    --text-2:#98989D; --line:#2E2E32; --accent:#0A84FF; --accent-sf:#11243C;
+    --shadow:0 2px 10px rgba(0,0,0,.5); --shadow-up:0 18px 44px rgba(0,0,0,.6);
+    --nav-bg:rgba(0,0,0,.66);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+                 Inter, "Helvetica Neue", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -.011em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { width: 100%; max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  :focus-visible {
+    outline: 2.5px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* ───────── nav ───────── */
+  .nav {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--nav-bg);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; height: 52px;
+  }
+  .nav .name { font-weight: 600; font-size: .95rem; color: var(--text); }
+  .nav .name:hover { text-decoration: none; }
+  .nav ul {
+    display: flex; align-items: center; gap: 1.5rem;
+    list-style: none; margin: 0; padding: 0;
+    font-size: .82rem; font-weight: 400;
+  }
+  .nav ul a { color: var(--text-2); }
+  .nav ul a:hover { color: var(--text); text-decoration: none; }
+  .nav .pill-sm {
+    background: var(--accent); color: #fff;
+    padding: .34rem .85rem; border-radius: 980px;
+    font-size: .8rem; font-weight: 500;
+  }
+  .nav .pill-sm:hover { text-decoration: none; opacity: .88; }
+
+  /* ───────── hero ───────── */
+  .hero { padding: 6.5rem 0 4.5rem; text-align: center; }
+  .hero h1 {
+    font-size: clamp(2.9rem, 8vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -.035em;
+    line-height: 1.04;
+    margin: 0 0 1.1rem;
+  }
+  .hero .sub {
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    color: var(--text-2);
+    font-weight: 400;
+    letter-spacing: -.018em;
+    max-width: 34rem;
+    margin: 0 auto 2rem;
+  }
+  .rotator {
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-weight: 500;
+    letter-spacing: -.018em;
+    margin: 0 0 2.4rem;
+  }
+  .rotator .verb {
+    color: var(--accent);
+    display: inline-block;
+    min-width: 6.5ch;
+    text-align: left;
+    animation: verbIn .5s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes verbIn {
+    from { opacity: 0; transform: translateY(.42em); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem; }
+  .pill {
+    display: inline-block;
+    border: 1px solid transparent;
+    background: var(--accent); color: #fff;
+    padding: .72rem 1.5rem; border-radius: 980px;
+    font-size: .98rem; font-weight: 500; cursor: pointer;
+    font-family: inherit; letter-spacing: -.011em;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), opacity .2s ease, background .2s ease;
+  }
+  .pill:hover { opacity: .88; text-decoration: none; transform: translateY(-1px); }
+  .pill.alt {
+    background: transparent; color: var(--accent); border-color: var(--line);
+  }
+  .pill.alt:hover { background: var(--accent-sf); opacity: 1; }
+
+  /* ───────── sections ───────── */
+  section { padding: 4rem 0; }
+  .sec-head {
+    font-size: clamp(1.9rem, 4.4vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -.028em;
+    margin: 0 0 .45rem;
+  }
+  .sec-note { color: var(--text-2); margin: 0 0 2.25rem; font-size: 1.02rem; }
+
+  /* ───────── experience ───────── */
+  .stack { display: grid; gap: 1rem; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    padding: 1.6rem 1.75rem;
+    transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-up); }
+
+  .job-top {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    justify-content: space-between; gap: .35rem 1rem; margin-bottom: .9rem;
+  }
+  .job-top h3 { font-size: 1.24rem; font-weight: 600; letter-spacing: -.021em; margin: 0; }
+  .job-top .role { color: var(--text-2); font-size: .98rem; display: block; margin-top: .1rem; }
+  .when {
+    color: var(--text-2); font-size: .85rem; font-weight: 400;
+    white-space: nowrap; background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 980px; padding: .2rem .7rem;
+  }
+  .card ul { margin: 0; padding-left: 1.15rem; }
+  .card li { margin-bottom: .5rem; color: var(--text-2); }
+  .card li:last-child { margin-bottom: 0; }
+  .card li::marker { color: var(--line); }
+
+  /* ───────── projects ───────── */
+  .proj { padding: 0; overflow: hidden; }
+  .proj-btn {
+    width: 100%; text-align: left; background: none; border: 0;
+    font: inherit; color: inherit; cursor: pointer;
+    padding: 1.6rem 1.75rem;
+    display: flex; align-items: center; gap: 1.25rem;
+  }
+  .proj-btn:focus-visible { outline-offset: -3px; }
+  .kicker {
+    color: var(--accent); font-size: .78rem; font-weight: 600;
+    letter-spacing: .005em; margin: 0 0 .2rem;
+  }
+  .proj-btn h3 { font-size: 1.24rem; font-weight: 600; letter-spacing: -.021em; margin: 0; }
+  .proj-btn .yr { color: var(--text-2); font-size: .88rem; margin: .18rem 0 0; }
+  .chev {
+    flex: 0 0 28px; width: 28px; height: 28px; margin-left: auto;
+    border-radius: 50%; background: var(--surface-2); border: 1px solid var(--line);
+    display: grid; place-items: center;
+    transition: transform .34s cubic-bezier(.22,1,.36,1), background .2s ease;
+  }
+  .chev svg { width: 11px; height: 11px; stroke: var(--text-2); fill: none; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+  .proj[open] .chev { transform: rotate(180deg); background: var(--accent-sf); }
+  .proj[open] .chev svg { stroke: var(--accent); }
+
+  .reveal { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s cubic-bezier(.22,1,.36,1); }
+  .proj[open] .reveal { grid-template-rows: 1fr; }
+  .reveal > div { overflow: hidden; }
+  .reveal-inner { padding: 0 1.75rem 1.6rem; }
+  .reveal ul { margin: 0; padding-left: 1.15rem; }
+  .reveal li { margin-bottom: .5rem; color: var(--text-2); }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.05rem; }
+  .tags span {
+    font-size: .78rem; color: var(--text-2);
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: 980px; padding: .22rem .72rem;
+  }
+
+  /* ───────── contact ───────── */
+  .contact-card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-lg); box-shadow: var(--shadow);
+    padding: 3rem 2rem; text-align: center;
+  }
+  .contact-card p { color: var(--text-2); max-width: 32rem; margin: 0 auto 1.9rem; }
+  .copy-wrap { display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem; }
+  .toast {
+    display: block; min-height: 1.4em; margin-top: 1rem;
+    font-size: .88rem; color: var(--accent); opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .toast.on { opacity: 1; }
+  .socials { margin-top: 1.9rem; font-size: .95rem; color: var(--text-2); }
+  .socials a { margin: 0 .55rem; }
+
+  footer {
+    padding: 2.5rem 0 3.5rem; text-align: center;
+    font-size: .82rem; color: var(--text-2);
+  }
+
+  @media (max-width: 40rem) {
+    body { font-size: 16px; }
+    .hero { padding: 4rem 0 3rem; }
+    .nav ul { gap: 1rem; }
+    .card, .proj-btn { padding: 1.3rem 1.25rem; }
+    .reveal-inner { padding: 0 1.25rem 1.3rem; }
+    .contact-card { padding: 2.25rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="name" href="#top">Esther Chang</a>
+    <ul>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a class="pill-sm" href="https://drive.google.com/file/d/1u4DXlwANN-Zt4YgCTTZNt9FGINV5Gb__/view?usp=sharing" target="_blank" rel="noopener">Resume</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="wrap hero">
+    <h1>Esther Chang</h1>
+    <p class="sub">Third-year Systems Design Engineering at the University of Waterloo.</p>
+    <p class="rotator">I build systems that <span class="verb" id="verb">sense</span></p>
+    <div class="cta">
+      <a class="pill" href="#projects">See my work</a>
+      <a class="pill alt" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <section id="experience">
+    <div class="wrap">
+      <h2 class="sec-head">Experience</h2>
+      <p class="sec-note">Medical devices, reliability, and mechanical design.</p>
+      <div class="stack">
+
+        <article class="card">
+          <div class="job-top">
+            <div>
+              <h3>Omniscient Neurotechnology</h3>
+              <span class="role">Systems Engineer</span>
+            </div>
+            <span class="when">Sep – Dec 2026</span>
+          </div>
+          <ul>
+            <li>Define and manage system requirements and traceability across product and engineering teams, keeping design history files complete and compliant with quality standards.</li>
+            <li>Coordinate new product introduction and design transfer, facilitating cross-functional reviews and release schedules to move features from design to launch.</li>
+            <li>Lead risk management activities — hazard analyses, FMEAs and cybersecurity risk assessments — to ensure product safety and clinical reliability.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="job-top">
+            <div>
+              <h3>Metrolinx</h3>
+              <span class="role">Reliability Engineering Intern</span>
+            </div>
+            <span class="when">Jan – Apr 2026</span>
+          </div>
+          <ul>
+            <li>Supported the reliability engineering team through root cause analyses investigating vehicle malfunctions.</li>
+            <li>Wrote standard operating procedures for newly implemented processes, giving floor technicians a consistent, faster path through the work.</li>
+            <li>Led the GO Bus surveillance footage distribution system, coordinating secure delivery of data to managers and law enforcement within compliance timelines.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="job-top">
+            <div>
+              <h3>Stryker</h3>
+              <span class="role">Medical Device Technical Intern</span>
+            </div>
+            <span class="when">Sep 2024 – May 2025</span>
+          </div>
+          <ul>
+            <li>Inspected and repaired hundreds of medical devices across instruments and consoles — surgical handpieces, PneumoClear, Core 2, SmartPump.</li>
+            <li>Ran quality assurance testing on repaired devices to verify safety and regulatory compliance before shipment.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="job-top">
+            <div>
+              <h3>UW Baja SAE</h3>
+              <span class="role">Mechanical Engineering Intern</span>
+            </div>
+            <span class="when">Jan – Apr 2024</span>
+          </div>
+          <ul>
+            <li>Designed and validated the 2025 vehicle suspension systems and engine mount using SolidWorks, FEA, MATLAB and 3D-printed prototypes.</li>
+            <li>Produced detailed engineering drawings and fabricated components on the mill, lathe and bandsaw.</li>
+            <li>Led team operations and external outreach, growing partnerships by 78%.</li>
+            <li>Competed in national Baja SAE competitions against North American teams.</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2 class="sec-head">Projects</h2>
+      <p class="sec-note">Tap any project to open it.</p>
+      <div class="stack">
+
+        <article class="card proj" id="p1">
+          <button class="proj-btn" aria-expanded="false" aria-controls="p1-body">
+            <div>
+              <p class="kicker">Embedded systems</p>
+              <h3>Ontect — edge AI security system</h3>
+              <p class="yr">April 2026</p>
+            </div>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><polyline points="2,4.5 6,8.5 10,4.5"/></svg></span>
+          </button>
+          <div class="reveal" id="p1-body" role="region">
+            <div><div class="reveal-inner">
+              <ul>
+                <li>Built an autonomous security system on an ESP32-S3 doing real-time human detection at the edge.</li>
+                <li>Cut idle power with deep sleep and PIR hardware interrupts, targeting a jump in battery life from 15 hours to roughly 3 months.</li>
+              </ul>
+              <div class="tags"><span>ESP32-S3</span><span>Embedded C</span><span>Computer vision</span><span>Low power</span></div>
+            </div></div>
+          </div>
+        </article>
+
+        <article class="card proj" id="p2">
+          <button class="proj-btn" aria-expanded="false" aria-controls="p2-body">
+            <div>
+              <p class="kicker">Analog hardware</p>
+              <h3>Heart rate sensor and love detector</h3>
+              <p class="yr">November – December 2025</p>
+            </div>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><polyline points="2,4.5 6,8.5 10,4.5"/></svg></span>
+          </button>
+          <div class="reveal" id="p2-body" role="region">
+            <div><div class="reveal-inner">
+              <ul>
+                <li>Designed a physical photoplethysmography (PPG) heart rate sensor, integrating IR diodes and ICs to capture real-time physiological data.</li>
+                <li>Extended it into a frequency-detection system by cascading analog filters, peak detectors and comparators to trigger outputs at specific heart rate thresholds.</li>
+              </ul>
+              <div class="tags"><span>Analog circuits</span><span>PPG</span><span>Filter design</span><span>Prototyping</span></div>
+            </div></div>
+          </div>
+        </article>
+
+        <article class="card proj" id="p3">
+          <button class="proj-btn" aria-expanded="false" aria-controls="p3-body">
+            <div>
+              <p class="kicker">Signal processing</p>
+              <h3>Cochlear implant signal processor</h3>
+              <p class="yr">October – December 2025</p>
+            </div>
+            <span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><polyline points="2,4.5 6,8.5 10,4.5"/></svg></span>
+          </button>
+          <div class="reveal" id="p3-body" role="region">
+            <div><div class="reveal-inner">
+              <ul>
+                <li>Built a multi-band audio signal processing system in MATLAB simulating cochlear implant function and reconstructing complex acoustic output.</li>
+                <li>Designed a verification framework using VISQOL, STOI and SNR to validate output clarity and speech intelligibility.</li>
+                <li>Wrote automated diagnostic tools for signal preprocessing, noise analysis and waveform visualisation.</li>
+              </ul>
+              <div class="tags"><span>MATLAB</span><span>DSP</span><span>Filter banks</span><span>Verification</span></div>
+            </div></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <h2 class="sec-head">Let's talk</h2>
+        <p>I'm looking for internships in hardware, medical devices and reliability engineering. If something here overlaps with your team's work, I'd like to hear about it.</p>
+        <div class="copy-wrap">
+          <button class="pill" id="copy" data-email="REPLACE@example.com">Copy email</button>
+          <a class="pill alt" href="https://drive.google.com/file/d/1u4DXlwANN-Zt4YgCTTZNt9FGINV5Gb__/view?usp=sharing" target="_blank" rel="noopener">Read my resume</a>
+        </div>
+        <span class="toast" id="toast" role="status" aria-live="polite"></span>
+        <p class="socials">
+          <a href="mailto:REPLACE@example.com">Email</a>·<a href="www.linkedin.com/in/esther-chang-6a7a8726b" target="_blank" rel="noopener">LinkedIn</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Esther Chang · Systems Design Engineering, University of Waterloo</footer>
+
+<script>
+(function () {
+  /* rotating verb */
+  var verbs = ["sense", "listen", "decide", "respond", "hold up"];
+  var el = document.getElementById("verb");
+  var i = 0;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (el && !reduce) {
+    setInterval(function () {
+      i = (i + 1) % verbs.length;
+      el.style.animation = "none";
+      void el.offsetWidth;
+      el.textContent = verbs[i];
+      el.style.animation = "";
+    }, 2200);
+  }
+
+  /* expandable project cards */
+  document.querySelectorAll(".proj-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var card = btn.closest(".proj");
+      var open = card.hasAttribute("open");
+      document.querySelectorAll(".proj[open]").forEach(function (o) {
+        if (o !== card) {
+          o.removeAttribute("open");
+          o.querySelector(".proj-btn").setAttribute("aria-expanded", "false");
+        }
+      });
+      if (open) { card.removeAttribute("open"); }
+      else { card.setAttribute("open", ""); }
+      btn.setAttribute("aria-expanded", String(!open));
+    });
+  });
+
+  /* copy email */
+  var copy = document.getElementById("copy");
+  var toast = document.getElementById("toast");
+  if (copy) {
+    copy.addEventListener("click", function () {
+      var addr = copy.dataset.email;
+      function done(msg) {
+        toast.textContent = msg;
+        toast.classList.add("on");
+        setTimeout(function () { toast.classList.remove("on"); }, 2400);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr)
+          .then(function () { done("Copied " + addr); })
+          .catch(function () { done("Couldn't copy — the address is " + addr); });
+      } else {
+        done("Copy didn't work here — the address is " + addr);
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
