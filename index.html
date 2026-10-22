@@ -24,7 +24,7 @@
     --r-sm: 12px;
     --r:    20px;
     --r-lg: 28px;
-    --sidebar-w: 18rem;
+    --sidebar-w: 16.5rem;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -130,18 +130,13 @@
   }
   .sb-nav a:hover { text-decoration: none; background: var(--surface-2); color: var(--text); }
   .sb-nav a.active { color: var(--accent); background: var(--accent-sf); }
-  .sb-nav .num {
-    font-size: .66rem; font-weight: 600; color: var(--line);
-    font-variant-numeric: tabular-nums;
-  }
-  .sb-nav a.active .num { color: var(--accent); }
 
   /* ───────── main column ───────── */
   main { flex: 1 1 auto; min-width: 0; }
-  .wrap { width: 100%; max-width: 58rem; margin: 0 auto; padding: 0 2.5rem; }
+  .wrap { width: 100%; max-width: 52rem; margin: 0 auto; padding: 0 2.25rem; }
 
   /* ───────── hero ───────── */
-  .hero { padding: 3.75rem 0 3rem; text-align: center; }
+  .hero { padding: 3.5rem 0 2.75rem; text-align: center; }
   .hero h1 {
     font-size: clamp(1.8rem, 4.2vw, 2.35rem);
     font-weight: 700;
@@ -191,20 +186,21 @@
   .pill svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ───────── sections ───────── */
-  section { padding: 4rem 0; scroll-margin-top: 2rem; }
+  section { padding: 3.5rem 0; scroll-margin-top: 2rem; }
   .sec-head {
     font-size: clamp(1.25rem, 2.6vw, 1.55rem);
     font-weight: 700;
     letter-spacing: -.02em;
     margin: 0 0 .3rem;
+    text-align: center;
   }
-  .sec-note { color: var(--text-2); margin: 0 0 1.5rem; font-size: .86rem; }
+  .sec-note { color: var(--text-2); margin: 0 0 1.5rem; font-size: .86rem; text-align: center; }
 
   /* ───────── shared collapsible card grid ───────── */
   .stack {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.35rem;
+    gap: 1.1rem;
     align-items: start;
   }
   .card {
@@ -221,7 +217,7 @@
   .entry-btn {
     width: 100%; text-align: left; background: none; border: 0;
     font: inherit; color: inherit; cursor: pointer;
-    padding: 1.6rem 1.8rem;
+    padding: 1.4rem 1.55rem;
     display: flex; align-items: flex-start; gap: .7rem;
   }
   .entry-btn:focus-visible { outline-offset: -3px; }
@@ -259,7 +255,7 @@
   .reveal { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s cubic-bezier(.22,1,.36,1); }
   .card[open] .reveal { grid-template-rows: 1fr; }
   .reveal > div { overflow: hidden; }
-  .reveal-inner { padding: 0 1.8rem 1.6rem; }
+  .reveal-inner { padding: 0 1.55rem 1.4rem; }
   .reveal-inner ul { margin: 0; padding-left: .95rem; }
   .reveal-inner li { margin-bottom: .38rem; color: var(--text-2); font-size: .8rem; }
   .reveal-inner li:last-child { margin-bottom: 0; }
@@ -275,11 +271,33 @@
   .proj.upcoming { border-style: dashed; }
   .proj.upcoming .kicker { color: var(--text-2); }
 
+
+  /* ───────── slide deck ───────── */
+  .deck-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow);
+    padding: .75rem;
+  }
+  .deck-frame {
+    position: relative; width: 100%; aspect-ratio: 16 / 9;
+    border-radius: calc(var(--r-lg) - .75rem); overflow: hidden;
+    background: var(--surface-2);
+  }
+  .deck-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .deck-empty {
+    position: absolute; inset: 0; display: none; place-items: center;
+    text-align: center; padding: 1.5rem; color: var(--text-2); font-size: .9rem;
+  }
+  .deck-frame.empty .deck-empty { display: grid; }
+  .deck-link { text-align: center; margin: 1rem 0 0; font-size: .82rem; }
+
   /* ───────── contact ───────── */
   .contact-card {
     background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--r-lg); box-shadow: var(--shadow);
-    padding: 2.75rem 2.5rem; text-align: center;
+    padding: 2.5rem 2.25rem; text-align: center;
   }
   .contact-card p { color: var(--text-2); font-size: .88rem; max-width: 27rem; margin: 0 auto 1.4rem; }
   .copy-wrap { display: flex; justify-content: center; flex-wrap: wrap; gap: .6rem; }
@@ -346,10 +364,11 @@
     </div>
 
     <ul class="sb-nav" id="sbNav">
-      <li><a href="#about"><span class="num">00</span>About</a></li>
-      <li><a href="#experience"><span class="num">01</span>Experience</a></li>
-      <li><a href="#projects"><span class="num">02</span>Projects</a></li>
-      <li><a href="#contact"><span class="num">03</span>Contact</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#deck">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </aside>
 
@@ -570,6 +589,21 @@
       </div>
     </section>
 
+    <section id="deck">
+      <div class="wrap">
+        <h2 class="sec-head">Portfolio</h2>
+        <p class="sec-note">Flip through my slides, or go full screen from the corner of the player.</p>
+        <div class="deck-card">
+          <div class="deck-frame" id="deckFrame"
+               data-src="https://drive.google.com/file/d/1u4DXlwANN-Zt4YgCTTZNt9FGINV5Gb__/preview">
+            <iframe id="deckIframe" title="Esther Chang portfolio slides" allowfullscreen
+                    mozallowfullscreen="true" webkitallowfullscreen="true" loading="lazy"></iframe>
+            <div class="deck-empty">The slide deck is coming soon.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="wrap">
         <div class="contact-card">
@@ -587,6 +621,8 @@
         </div>
       </div>
     </section>
+
+    <footer><div class="wrap">Esther Chang</div></footer>
 
   </main>
 
@@ -698,6 +734,15 @@
         toggle.setAttribute("aria-expanded", "false");
       });
     });
+  }
+
+  /* slide deck embed */
+  var deckFrame = document.getElementById("deckFrame");
+  var deckIframe = document.getElementById("deckIframe");
+  if (deckFrame && deckIframe) {
+    var deckSrc = deckFrame.getAttribute("data-src");
+    if (deckSrc) { deckIframe.src = deckSrc; }
+    else { deckFrame.classList.add("empty"); deckIframe.style.display = "none"; }
   }
 
   /* scroll-spy */
